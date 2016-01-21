@@ -1,0 +1,8 @@
+*.a
+*.vim
+CMakeFiles/
+Makefile
+*.cmake
+bin/
+CMakeCache.txt
+*-toolchain.txt
