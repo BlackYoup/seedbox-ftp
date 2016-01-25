@@ -6,7 +6,7 @@
 class Utils{
   public:
     static std::vector<char*> split(char*, char, int);
-    static char *strcpy(char*, char*, int, int);
+    static int gettimeofday(struct timeval*, struct timezone*);
 };
 
 #endif

@@ -6,7 +6,7 @@ CLI::CLI(int argc, char *argv[]){
 };
 
 void CLI::parseArgs(int argc, char *argv[]){
-  for(int i = 0; i < argc; i++){
+  for(int i = 1; i < argc; i++){
     vector<char*> tmp = Utils::split(argv[i], '=', 0);
 
     if(strcmp(tmp[0], "--ftp-user") == 0){

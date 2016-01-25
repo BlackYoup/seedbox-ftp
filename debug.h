@@ -1,10 +1,10 @@
-#pragma once
-#include <string.h>
-#include <iostream>
-#include <typeinfo>
+#ifndef DEBUG_H
+#define DEBUG_H
+
+#include "includes.h"
 
 enum DEBUG_LEVEL{
-  ERROR = 1,
+  ERR = 1,
   INFO  = 2,
   DEBUG = 3
 };
@@ -12,12 +12,20 @@ enum DEBUG_LEVEL{
 class Debug{
   private:
     char* getTime();
-    char const* getLogLevelStr(DEBUG_LEVEL);
+
+#ifndef  _WIN32
+    char const* getUNIXLogLevelStr(DEBUG_LEVEL);
+    void printUNIXHeader(DEBUG_LEVEL);
+#else
+    void printWindowsHeader(DEBUG_LEVEL);
+#endif
+
     void printHeader(DEBUG_LEVEL);
+
     template <typename T, typename... Args> void printBody(T, Args...);
     template <typename T> void printBody(T);
 
-    const int sizeOfStrTime = sizeof "00:00:00.000";
+    static const int sizeOfStrTime = 10;
   public:
     template <typename T, typename... Args> void log(DEBUG_LEVEL, T, Args...);
     template <typename T> void log(DEBUG_LEVEL, T);
@@ -64,3 +72,4 @@ template <typename T>
 void Debug::printBody(T message){
   std::cout << message << std::endl;
 };
+#endif

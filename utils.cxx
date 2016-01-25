@@ -9,7 +9,9 @@ vector<char *> Utils::split(char *str, char del, int limit){
   size_t length = strlen(str);
   size_t count = 0;
 
-  char buffer[length] = {'\0'};
+  char *buffer = (char*)malloc(length);
+  memset(buffer, '\0', length);
+
   int bufferEntry = 0;
   int found = 0;
   bool limitReached;
@@ -47,21 +49,29 @@ vector<char *> Utils::split(char *str, char del, int limit){
     }
   }
 
+  free(buffer);
+
   return splittedStr;
 };
 
-char *Utils::strcpy(char *dest, char *source, int sourceStart, int sourceEnd){
-  if(sourceEnd <= 0 || sourceStart > sourceEnd){
-    sourceEnd = strlen(source);
-  }
+#ifdef _WIN32
+// Taken from http://stackoverflow.com/questions/10905892/equivalent-of-gettimeday-for-windows
+int Utils::gettimeofday(struct timeval * tp, struct timezone * tzp)
+{
+  // Note: some broken versions only have 8 trailing zero's, the correct epoch has 9 trailing zero's
+  static const uint64_t EPOCH = ((uint64_t) 116444736000000000ULL);
 
-  char buffer[sourceEnd - sourceStart + 1];
+  SYSTEMTIME  system_time;
+  FILETIME    file_time;
+  uint64_t    time;
 
-  for(int i = 0; sourceStart < sourceEnd; i++, sourceStart++){
-    buffer[i] = source[sourceStart];
-  }
+  GetSystemTime( &system_time );
+  SystemTimeToFileTime( &system_time, &file_time );
+  time =  ((uint64_t)file_time.dwLowDateTime )      ;
+  time += ((uint64_t)file_time.dwHighDateTime) << 32;
 
-  buffer[sourceEnd] = '\0';
-
-  return std::strcpy(dest, buffer);
-};
+  tp->tv_sec  = (long) ((time - EPOCH) / 10000000L);
+  tp->tv_usec = (long) (system_time.wMilliseconds * 1000);
+  return 0;
+}
+#endif

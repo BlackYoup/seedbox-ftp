@@ -12,6 +12,9 @@ class Socket{
     struct addrinfo *host_info_list;
     Debug d;
 
+#ifdef _WIN32
+	Socket* initWSA();
+#endif
     Socket* bindSocket();
     Socket* createSocket(char*);
     Socket* listenConnections();
@@ -25,6 +28,7 @@ class Socket{
     int errorCode = 0;
     char strError[128];
     Seedbox *sb;
+    char port[6];
   public:
     Socket(char*, Seedbox*);
 };
