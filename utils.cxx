@@ -1,8 +1,6 @@
 #include "includes.h"
 #include "utils.h"
 
-using std::vector;
-
 vector<char *> Utils::split(char *str, char del, int limit){
   vector<char *> splittedStr;
 
