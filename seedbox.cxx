@@ -196,7 +196,7 @@ HANDLE WINAPI Seedbox::createWindowsThread(fileData *file) {
 	return CreateThread(NULL, 0, download, file, 0, &th);
 };
 #else
-int Seedbox::createUNIXThread(fileData file) {
+int Seedbox::createUNIXThread(fileData *file) {
 	pthread_t th;
 	return pthread_create(&th, NULL, download, file);
 };

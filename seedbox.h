@@ -31,7 +31,7 @@ class Seedbox{
 #ifdef _WIN32
 	HANDLE WINAPI createWindowsThread(fileData*);
 #else
-	int createUNIXThread(fileData);
+	int createUNIXThread(fileData*);
 #endif
 
     // Attributes

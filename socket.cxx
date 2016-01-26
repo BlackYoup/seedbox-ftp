@@ -137,7 +137,6 @@ Socket* Socket::bindSocket(){
 #endif
 
   if(statusBind == -1){
-    d.log(DEBUG, "Bad status bind", WSAGetLastError());
     sprintf(this->strError, "Error binding socket: %s", strerror(errno));
     this->errorCode = statusBind;
     return this;
