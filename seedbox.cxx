@@ -120,6 +120,9 @@ void *download(void *arg) {
   d.log("Checking full path:", file->fullPath);
   if(!fileExists(file->fullPath)){
     // TODO: this check is useless on windows as long as we use winscp
+#ifdef _WIN32
+    d.log("File", file->filename, "doesn't exist, wrong name ?");
+#else
     if(file->isFolder){
       d.log("File", file->filename, "is not a file nor a folder, wrong name ?");
     } else{
@@ -128,6 +131,7 @@ void *download(void *arg) {
       file->isFolder = true;
       download(file);
     }
+#endif
   } else{
     d.log("Download of", file->filename, "completed !");
   }
